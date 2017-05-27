@@ -6,7 +6,7 @@ Prototype was designed with : proto.io (https://share.proto.io/0PSRZX/)
 
 The WWW folder is the cordova source folder.
 
-Progress: 
+Progress:  
    UI prototyping : 75%  
    FrontEnd Js : 35%  
    Nodejs Backend : 50%  
