@@ -25,7 +25,6 @@ app.get('/', (req, res)=>{
 });
 
 app.post('/login', (req, res)=>{
-  console.log('aa');
   pool.query('SELECT * FROM admins WHERE email = '+USR+' ', function(err, rows){
     if(err){ return; console.log(err)}
       if(rows.length > 0){
@@ -41,10 +40,7 @@ app.post('/login', (req, res)=>{
 });
 
 app.post('/createBizz', (req, res)=>{
-   var name = req.body.name;
-   var slogan = req.body.slogan;
-   console.log(name+' '+slogan);
-
+  
    pool.query('INSERT INTO businesses SET ?', req.body, function(err, ok) {
      if (err) {console.log(err); return;}
        console.log(ok);
