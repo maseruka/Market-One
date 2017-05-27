@@ -8,9 +8,8 @@ requirejs.config({
         }
 });
 
-var scripts = ['jquery','Vue','framework7.min','framework7-vue','socket.io.min',
-    'underscore','vue-resource', 'vee-validate.min','app/model/sigupWithGoogle',
-    'app/model/uploadProfileToServer', 'require-vuejs!homePage','require-vuejs!signUpLogin','require-vuejs!input'];
+var scripts = ['Vue','framework7.min','framework7-vue','vue-resource','require-vuejs!homePage',
+   'require-vuejs!signUpLogin','require-vuejs!input','require-vuejs!dashboard','require-vuejs!createName'];
 
 
  var data = {
@@ -20,11 +19,14 @@ var scripts = ['jquery','Vue','framework7.min','framework7-vue','socket.io.min',
    username:localStorage["username"]
 }
 var Zsocket = null;
-requirejs(scripts, function($,Vue, F7, F7Vue, io, _, rq, Validate, reusableFunctions, uploadToServer) { 
+requirejs(scripts, function(Vue,F7,F7Vue, VRs) { 
   var myApp = new Framework7(); 
   Vue.use(F7Vue);
-  Vue.use(Validate);
+  Vue.use(VRs)
   $f7 = Dom7;
+   
+
+
    new Vue({
           el: "#app",
           data:data,
@@ -34,6 +36,12 @@ requirejs(scripts, function($,Vue, F7, F7Vue, io, _, rq, Validate, reusableFunct
           routes:[{
              path:'/createBuz/',
              component:'login-signup'
+          },{
+            path:'/dashboard',
+            component:'dashboard-component'
+          },{
+            path:'/createName',
+            component:'create-name-component'
           }],
           material: !Framework7.prototype.device.ios,
           fastClicks:false,
