@@ -25,10 +25,9 @@ app.get('/', (req, res)=>{
 });
 
 app.post('/login', (req, res)=>{
-  pool.query('SELECT * FROM admins WHERE email = '+USR+' ', function(err, rows){
+  pool.query('SELECT * FROM admins WHERE email = '+req.body.email+' ', function(err, rows){
     if(err){ return; console.log(err)}
       if(rows.length > 0){
-        console.log('asas');
         res.send('Available');
     }else{
       pool.query('INSERT INTO admins SET ?'+req.body, function(err, res) {
@@ -40,19 +39,42 @@ app.post('/login', (req, res)=>{
 });
 
 app.post('/createBizz', (req, res)=>{
-  
    pool.query('INSERT INTO businesses SET ?', req.body, function(err, ok) {
      if (err) {console.log(err); return;}
        console.log(ok);
    })
+});
 
+app.post('/addLocation', (req, res)=>{
+  console.log('Ffe Tuliko')
+  pool.query('INSERT INTO geo_location SET ?',req.body, function(err, ok) {
+     if (err) {console.log(err); return;}
+          res.send('done');      
+  })
+});
 
-})
+app.post('/product', (req, res)=>{
+  pool.query('INSERT INTO products SET ?',req.body, function(err, ok) {
+      if (err) {console.log(err); return;}
+      res.send('done');
+  })
+});
 
-app.get('/search', (req, res)=>{
-  var product = req.body.productSearched;
+app.get('/suggestions', (req, res)=>{
   
-})
+});
+
+ app.get('/Search', (req, res)=>{
+  console.log('Search');
+     var business = [
+         {
+          name: 'Kinkizi Traders',
+          image: 'default.jpg',
+          distance: '10m'
+         }
+     ]
+     res.send(business);
+ })
 
 
 http.listen(process.env.PORT, ()=>{

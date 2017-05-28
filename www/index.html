@@ -1,31 +1,83 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="css/framework7.material.min.css">
-	<link rel="stylesheet" type="text/css" href="css/framework7.material.colors.min.css">
-	<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="css/theme.css">
-</head>
-<body>
-  <div id="app">
-     <f7-statusbar></f7-statusbar>
-  	 <f7-views navbar-fixed theme="orange">
-  	 	  <f7-view main>
-  	 	  	   <f7-pages>
-                 <home-page></home-page>  
-             </f7-pages>
-  	 	  </f7-view>
-  	 </f7-views>
-  </div>
- <script type="text/javascript" src="cordova.js"></script>
- <script src="js/require.js"></script>
- <script type="text/javascript" src="js/config.js"></script>
- <script type="text/javascript">
-     document.addEventListener('deviceready',function(argument) {
+<!--
+    Copyright (c) 2012-2016 Adobe Systems Incorporated. All rights reserved.
 
-     },false);
- </script>
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+     <link rel="stylesheet" type="text/css" href="css/framework7.material.min.css">
+     <link rel="stylesheet" type="text/css" href="css/framework7.material.colors.min.css">
+     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+     <link rel="stylesheet" type="text/css" href="css/theme.css">
+    <title>Hello World</title>
+</head>
+
+<body>
+    <div id="app">
+        <f7-views>
+             <f7-view main>
+                  <f7-pages>
+                          <home-page></home-page>
+                  </f7-pages>
+             </f7-view>
+        </f7-views>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/require.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript">
+         document.addEventListener('deviceready',function(argument) {
+               navigator.geolocation.getCurrentPosition(onSuccess, onError, {enableHighAccuracy: true });
+
+               function onSuccess(position) {
+                    localStorage["latitude"] = position.coords.latitude;
+                    localStorage["longitude"] = position.coords.longitude;
+                    var cordinates = {latitude:position.coords.latitude, longitude:position.coords.longitude, business_ID:localStorage["BuzzID"]};
+                   $f7.ajax({
+                     url:'http://192.168.1.160:8080/getSuggestions',
+                     method:'GET',
+                     data:cordinates,
+                     success:function(dataa) {
+                       var data = JSON.parse(dataa);
+                       if (data.length > 0) {
+                         for (var i = 0; i < data.length; i++) {
+                              postData.posts.push(data[i]);
+                         }
+                       }
+                     },
+                     error:function() {
+                       
+                     }
+                   })
+               }
+
+               function onError() {
+                   
+               }
+         },false);
+    </script>
 </body>
+
 </html>

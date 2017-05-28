@@ -4,13 +4,14 @@
   "description": "Backend for an hackathon app.",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "repository": "",
   "author": "Maseruka Isaac",
   "dependencies": {
     "@google/maps": "^0.3.1",
     "body-parser": "^1.17.2",
+    "cities": "^1.1.2",
     "dotenv": "^4.0.0",
     "express": "~3.2.4",
     "mysql": "^2.13.0"
